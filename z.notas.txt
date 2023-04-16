@@ -1,0 +1,49 @@
+1. 06:49 (2)Instalación del framework
+
+* documentacion en español -> https://codeigniter.es/
+
+1. descargue el comprimiodo -> https://codeigniter.com/download
+2. copie y pegue la carpeta con el proyecto en htdocs y la renombre lp-2023-codeigniter-biblioteca
+
+----- 
+
+2. 08:06 (3)Configuración y creación de la BD
+
+* creo la DB desde http://localhost/phpmyadmin/
+* lp-2023-codeigniter-biblioteca
+* encoding -> utf8mb4_general_ci
+
+----- 
+
+4. 10:12 (5)Configuraciones del proyecto
+
+* vamos a configurar la conexion con la DB
+
+* /app/config/Database.php
+seteo el atributo $default con los datos de la DB vvv 
+public array $default = [
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'lp-2023-codeigniter-biblioteca',
+    ...
+]; 
+
+* /app/config/App.php
+* seteamos public string $baseURL con la ruta absoluta al index e nuestro proyecto (en test o produccion hay que modificarlo segun sea necesario)
+public string $baseURL = 'http://localhost/lp-2023-codeigniter-biblioteca/public/';
+
+----- 
+
+5. 13:10 (6)Creación de tablas y campos
+
+CREATE TABLE `lp-2023-codeigniter-biblioteca`.`libros` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(60) NULL,
+  `imagen` VARCHAR(60) NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO `libros` (`nombre`, `imagen`) VALUES
+('Aprende PHP', 'imagen.jpg'),
+('Aprende Node', 'imagenNode.jpg');
