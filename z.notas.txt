@@ -1,4 +1,4 @@
-1. 06:49 (2)Instalación del framework
+06:49 (2)Instalación del framework
 
 * documentacion en español -> https://codeigniter.es/
 
@@ -7,7 +7,7 @@
 
 ----- 
 
-2. 08:06 (3)Configuración y creación de la BD
+08:06 (3)Configuración y creación de la BD
 
 * creo la DB desde http://localhost/phpmyadmin/
 * lp-2023-codeigniter-biblioteca
@@ -15,7 +15,7 @@
 
 ----- 
 
-4. 10:12 (5)Configuraciones del proyecto
+10:12 (5)Configuraciones del proyecto
 
 * vamos a configurar la conexion con la DB
 
@@ -35,7 +35,7 @@ public string $baseURL = 'http://localhost/lp-2023-codeigniter-biblioteca/public
 
 ----- 
 
-5. 13:10 (6)Creación de tablas y campos
+13:10 (6)Creación de tablas y campos
 
 CREATE TABLE `lp-2023-codeigniter-biblioteca`.`libros` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -50,9 +50,17 @@ INSERT INTO `libros` (`nombre`, `imagen`) VALUES
 
 ----- 
 
-6. 17:44 (7)Conociendo las rutas de acceso
+17:44 (7)Conociendo las rutas de acceso
 
 router -> /app/Config/Routes.php
 controllers -> /app/Controllers
 models -> /app/Models 
 views -> /app/Views
+
+----- 
+
+31:08 (10)Instalación de bootstrap y errores
+
+/app/Boot/production.php
+* seteamos en '1' 'display_errors' para que el server nos muestre posibles errores por pantalla en lugar del mensaje generico de error (valor por defecto '0') vvv
+ini_set('display_errors', '1');
