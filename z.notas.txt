@@ -47,3 +47,12 @@ CREATE TABLE `lp-2023-codeigniter-biblioteca`.`libros` (
 INSERT INTO `libros` (`nombre`, `imagen`) VALUES
 ('Aprende PHP', 'imagen.jpg'),
 ('Aprende Node', 'imagenNode.jpg');
+
+----- 
+
+6. 17:44 (7)Conociendo las rutas de acceso
+
+router -> /app/Config/Routes.php
+controllers -> /app/Controllers
+models -> /app/Models 
+views -> /app/Views
