@@ -1,2 +1,4 @@
 /app/Config/Database.php
 .env
+/public/uploads
+/writable/logs

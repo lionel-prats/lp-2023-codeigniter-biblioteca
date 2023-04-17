@@ -64,3 +64,29 @@ views -> /app/Views
 /app/Boot/production.php
 * seteamos en '1' 'display_errors' para que el server nos muestre posibles errores por pantalla en lugar del mensaje generico de error (valor por defecto '0') vvv
 ini_set('display_errors', '1');
+
+----- 
+
+49:43 (14)Creación del método crear
+
+base_url() -> funcion (no se si de CodeIgniter o de PHP - chequear -) que nos retorna el valor del atributo $baseURL de la clase App (/app/Config/App.php)
+*** este atributo lo seteamos en -> 10:12 (5)Configuraciones del proyecto 
+
+base_url('crear') -> 'http://localhost/lp-2023-codeigniter-biblioteca/public/crear'
+
+----- 
+
+52:47 (15)Creación del formulario de crear
+
+* al form le agregamos el atributo enctype="multipart/form-data" para poder enviar archivos al server (en nuestro ejemplo necesitamos enviar una image asociada al nuevo libro a crear)
+
+----- 
+
+57:23 (16)Recepción de datos por POST
+
+site_url() -> funcion (no se si de CodeIgniter o de PHP - chequear -) que aparentemente retorna la ruta absoluta del archivo desde donde se ejecuta la funcion 
+* la usamos para setear el action="" del form para crear un libro nuevo (/app/Views/libros/crear.php)
+
+site_url() -> http://localhost/lp-2023-codeigniter-biblioteca/public/index.php
+
+*** para el action="", base_url("guardar") apunta al mismo endpoint que site_url("guardar"), pero es mejor la url que arroja base_url()
