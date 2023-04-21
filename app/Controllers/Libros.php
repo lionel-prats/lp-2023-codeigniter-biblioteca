@@ -28,6 +28,8 @@ class Libros extends Controller
         $libro = new Libro();
 
         $nombre = $this->request->getVar('nombre');
+        // capturo el input name="nombre"
+        // dd($this);
         // $this hace referencia a la instancia de esta mismo controlador (es una clase) Libros
         // request calculo es un atributo de la clase Controller, que puedo accederlo por herencia
         // getVar() calculo es un metodo de la clase Controller, que puedo accederlo por herencia
@@ -35,7 +37,6 @@ class Libros extends Controller
 
         if($imagen = $this->request->getFile('imagen')) {
             $nuevoNombre = $imagen->getRandomName();
-            
             $imagen->move('../public/uploads', $nuevoNombre);
             // move() guardara un archivo en el servidor (le pasamos la carpeta de destino como primer argumento; si no existe, se crea automaticamente)
 
@@ -45,8 +46,18 @@ class Libros extends Controller
             ];
 
             $libro->insert($datos);
-        
+            // insert() es un metodo de Model, clase heredada por Libro
         } 
         echo "ingresado a la BD";
+    }
+    public function borrar($id = null)
+    {
+        //dd(base_url('listar'));
+        $libro = new Libro();
+        $datosLibro = $libro->where('id', $id)->first();
+        $ruta = "../public/uploads/" . $datosLibro['imagen'];
+        unlink($ruta);
+        $libro->where('id', $id)->delete($id);
+        return $this->response->redirect(base_url('listar'));
     }
 }

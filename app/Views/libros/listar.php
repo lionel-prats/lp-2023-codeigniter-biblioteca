@@ -15,7 +15,10 @@
                     <td><?= $libro['id'] ?></td>
                     <td><?= $libro['imagen'] ?></td>
                     <td><?= $libro['nombre'] ?></td>
-                    <td>Editar/Borrar</td>
+                    <td>
+                        <a href="<?= base_url('borrar') . '/' . $libro['id'] ?>" class="btn btn-danger">Borrar</a>
+
+                    </td>
                 </tr>
             <?php } ?>
         </tbody>
