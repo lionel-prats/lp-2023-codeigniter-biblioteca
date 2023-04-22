@@ -48,7 +48,7 @@ class Libros extends Controller
             $libro->insert($datos);
             // insert() es un metodo de Model, clase heredada por Libro
         } 
-        echo "ingresado a la BD";
+        return $this->response->redirect(base_url('listar'));
     }
     public function borrar($id = null)
     {
@@ -58,6 +58,32 @@ class Libros extends Controller
         $ruta = "../public/uploads/" . $datosLibro['imagen'];
         unlink($ruta);
         $libro->where('id', $id)->delete($id);
+        return $this->response->redirect(base_url('listar'));
+    }
+    public function editar($id = null)
+    {
+        $libro = new Libro();
+        $libro_a_editar = $libro->where('id', $id)->first();
+        $datos['libro'] = $libro_a_editar;
+        $datos['cabecera'] = view('template/cabecera');
+        $datos['piepagina'] = view('template/piepagina');
+        return view('libros/editar', $datos);
+    }
+    public function actualizar()
+    {
+        $libro = new Libro();
+        $datos = [
+            'nombre' => $this->request->getVar('nombre')
+        ];
+        $id = $this->request->getVar('id');
+        $libro->update($id, $datos);
+
+        /* 
+        
+        01:37:29 (25)Modificación de datos y de imagen
+
+        */
+
         return $this->response->redirect(base_url('listar'));
     }
 }

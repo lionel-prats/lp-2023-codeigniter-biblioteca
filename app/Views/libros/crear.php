@@ -1,5 +1,5 @@
 <?=$cabecera?>
-    <a href="<?= base_url('listar') ?>">Volver</a>
+    <a class="btn btn-success my-5" href="<?= base_url('listar') ?>">Volver</a>
 
     <div class="card">
       <div class="card-body">
