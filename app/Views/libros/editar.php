@@ -1,5 +1,4 @@
 <?=$cabecera?>
-    <a class="btn btn-success my-5" href="<?= base_url('listar') ?>">Volver</a>
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Editar libro</h5>
@@ -10,7 +9,13 @@
 
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" class="form-control" name="nombre" value="<?= $libro["nombre"]; ?>">
+                    <input 
+                        type="text" 
+                        id="nombre" 
+                        class="form-control" 
+                        name="nombre" 
+                        value="<?php echo session('mensaje') ? old('nombre') : $libro["nombre"]; ?>"
+                    >
                 </div>
 
                 <div class="form-group">
@@ -20,9 +25,13 @@
                 </div>
 
                 <button type="submit" class="btn btn-success">Actualizar</button>
+                <a class="btn btn-primary" href="<?= base_url('listar') ?>">Cancelar</a>
 
             </form>
         </p>
       </div>
     </div>
 <?=$piepagina?>
+
+
+

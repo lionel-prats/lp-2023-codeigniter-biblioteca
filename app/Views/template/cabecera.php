@@ -9,3 +9,23 @@
 </head>
 <body>
     <div class="container">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a href="#" class="navbar-brand">Biblioteca</a>
+            <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a href="<?= base_url('listar'); ?>" class="nav-link">Libros</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <?php if(session('mensaje')){ ?>
+        <div class="alert alert-danger">
+            <?= session("mensaje"); ?>
+        </div>
+        <?php } ?>

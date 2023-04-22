@@ -35,19 +35,41 @@ class Libros extends Controller
         // getVar() calculo es un metodo de la clase Controller, que puedo accederlo por herencia
         // 59'40""
 
-        if($imagen = $this->request->getFile('imagen')) {
-            $nuevoNombre = $imagen->getRandomName();
-            $imagen->move('../public/uploads', $nuevoNombre);
-            // move() guardara un archivo en el servidor (le pasamos la carpeta de destino como primer argumento; si no existe, se crea automaticamente)
+        $name_validations = [
+            'required',
+            'min_length[3]'
+        ];
+        $image_validations = [
+            'uploaded[imagen]',
+            'mime_in[imagen,image/jpg,image/jpeg,image/png]',
+            'max_size[imagen,1024]' // max_size = 1024KB 
+        ];
 
-            $datos = [
-                'nombre' => $nombre,
-                'imagen' => $nuevoNombre
-            ];
+        $validacion = $this->validate([
+            'nombre' => $name_validations, 
+            'imagen' => $image_validations 
+        ]);
 
-            $libro->insert($datos);
-            // insert() es un metodo de Model, clase heredada por Libro
-        } 
+        if(!$validacion) {
+            session()->setFlashdata('mensaje', 'Error en la creación: revise los datos ingresados');
+            return redirect()->back()->withInput();
+            // el metodo redirect()->back() vuelve a la URL anterior 
+            // agregando el metodo ->withInput() nos sirve para que el metodo old() en la vista se ejecute correctamente (en este ejemplo lo usamos para mantener impreso en el input nombre, el nombre que haya escrito el usuario)
+        }
+
+        $imagen = $this->request->getFile('imagen');
+        $nuevoNombre = $imagen->getRandomName();
+        $imagen->move('../public/uploads', $nuevoNombre);
+        // move() guardara un archivo en el servidor (le pasamos la carpeta de destino como primer argumento; si no existe, se crea automaticamente)
+
+        $datos = [
+            'nombre' => $nombre,
+            'imagen' => $nuevoNombre,
+        ];
+
+        $libro->insert($datos);
+        // insert() es un metodo de Model, clase heredada por Libro
+
         return $this->response->redirect(base_url('listar'));
     }
     public function borrar($id = null)
@@ -63,26 +85,59 @@ class Libros extends Controller
     public function editar($id = null)
     {
         $libro = new Libro();
-        $libro_a_editar = $libro->where('id', $id)->first();
-        $datos['libro'] = $libro_a_editar;
+        $datos['libro'] = $libro->where('id', $id)->first();
         $datos['cabecera'] = view('template/cabecera');
         $datos['piepagina'] = view('template/piepagina');
         return view('libros/editar', $datos);
     }
     public function actualizar()
     {
-        $libro = new Libro();
-        $datos = [
-            'nombre' => $this->request->getVar('nombre')
-        ];
         $id = $this->request->getVar('id');
-        $libro->update($id, $datos);
 
-        /* 
+        $name_validations = [
+            'required',
+            'min_length[3]'
+        ];
+        $array_validations['nombre']= $name_validations;
         
-        01:37:29 (25)Modificación de datos y de imagen
+        if($_FILES['imagen']['tmp_name']){
+            $image_validations = [
+                'uploaded[imagen]',
+                'mime_in[imagen,image/jpg,image/jpeg,image/png]',
+                'max_size[imagen,1024]' // max_size = 1024KB 
+            ];
+            $array_validations['imagen']= $image_validations;
+        }
+        
+        $validacion = $this->validate($array_validations);
 
-        */
+        if(!$validacion) {
+            session()->setFlashdata('mensaje', 'Error en la edición: revise los datos ingresados');
+            return redirect()->back()->withInput();
+        }
+
+        $libro = new Libro();
+
+        $datos['nombre'] = $this->request->getVar('nombre');
+
+        if($_FILES['imagen']['tmp_name']){
+
+            $datos['imagen'] = $nuevoNombre;
+            
+            // elimino del server imagen anterior
+            $datosLibro = $libro->where('id', $id)->first();
+            $ruta = "../public/uploads/" . $datosLibro['imagen'];
+            unlink($ruta);
+            
+            // subo al server imagen nueva
+            $imagen = $this->request->getFile('imagen');
+            $nuevoNombre = $imagen->getRandomName();
+            $imagen->move("../public/uploads/", $nuevoNombre);   
+
+        }
+
+        // hago un UPDATE en la BD
+        $libro->update($id, $datos);
 
         return $this->response->redirect(base_url('listar'));
     }
